@@ -43,3 +43,33 @@ SELECT track_name, artist_name, popularity
 FROM BIT_DB.spotifydata
 ORDER BY popularity desc
 LIMIT 10
+
+SELECT * 
+FROM BIT_DB0.Spotifydata;
+
+#1. What is the avg popularity, danceability, and energy by artist and track. */
+
+SELECT artist_name, track_name, avg(popularity), avg(danceability), avg(energy)
+FROM BIT_DB0.Spotifydata 
+GROUP BY artist_name, track_name;
+
+#2. What are the top 10 popular songs and danceabilty? */
+SELECT artist_name, track_name, popularity, danceability
+FROM BIT_DB0.Spotifydata
+ORDER BY popularity  desc
+LIMIT 10;
+
+#3. Which Artist has multiple songs on the top 10 popularity list. */
+
+WITH tempTable as 
+(
+SELECT artist_name , popularity, count(artist_name) CAN
+FROM Spotifydata s
+GROUP BY s.artist_name
+ORDER BY s.popularity desc 
+LIMIT 10
+)
+
+SELECT artist_name, 'GOLD STAR' as TAG
+FROM tempTable 
+WHERE CAN >=2;
